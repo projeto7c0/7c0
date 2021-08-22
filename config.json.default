@@ -1,0 +1,24 @@
+{
+	"database_ddl": {
+		"drivername": "",
+		"username": "",
+		"password": "",
+		"host": "",
+		"port": "",
+		"database": ""
+	},
+	"database_dml": {
+		"drivername": "",
+		"username": "",
+		"password": "",
+		"host": "",
+		"port": "",
+		"database": ""
+	},
+	"twitter-keys": {
+		"api_key": "",
+		"api_secret_key": "",
+		"access_token": "",
+		"access_token_secret": ""
+	}
+}

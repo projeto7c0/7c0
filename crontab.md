@@ -1,0 +1,1 @@
+* * * * * nohup python3 7c0-capturas/update_from_list.py > capture.log 2> capture_err.log &
