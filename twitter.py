@@ -34,15 +34,14 @@ def get_tweets(tweets_ids):
     ids = []
     for tweet in tweets_ids:
         ids.append(str(tweet.twitter_id))
-
+    print(len(ids))
     tweets = []
     if len(ids) > 0:
-        for status in api.statuses_lookup(ids, trim_user=True, include_entities=False, map_=True):
+        for status in api.statuses_lookup(ids, trim_user=True, include_entities=False, map_=False):
             tweets.append(status)
-
     deleted = []
     for id in ids:
         if not any(status.id_str == id for status in tweets):
-            deleted.appent(id)
+            deleted.append(id)
 
     return tweets, deleted
