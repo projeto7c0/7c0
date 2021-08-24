@@ -12,10 +12,16 @@ def update_tweets(minutes):
         id_groups = split(tweets, 1+len(tweets)//100)
     else:
         id_groups = [tweets]
+    if minutes > 0:
+        for id_group in id_groups:
+            updated_tweets, deleted = twitter.get_tweets(id_group)
+            update_tweets_db(updated_tweets, deleted)
+    else:
+        for id_group in id_groups:
+            updated_tweets, deleted = twitter.get_tweets(id_group)
+            updated_tweets = []
+            update_tweets_db(updated_tweets, deleted)
 
-    for id_group in id_groups:
-        updated_tweets, deleted = twitter.get_tweets(id_group)
-        update_tweets_db(updated_tweets, deleted)
 
 
 def split(a, n):
