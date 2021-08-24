@@ -154,7 +154,7 @@ def recupera_ids(minutes):
     Session = sessionmaker(bind=engine)
     session = Session()
     
-    return session.query(Tweet).filter(Tweet.created_at >= datetime.utcnow()-timedelta(minutes=minutes)).all()
+    return session.query(Tweet).filter(Tweet.erased == False).filter(Tweet.created_at >= datetime.utcnow()-timedelta(minutes=minutes)).all()
 
 
 def update_tweets_db(updated_tweets, deleted):
