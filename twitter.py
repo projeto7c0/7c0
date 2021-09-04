@@ -44,3 +44,21 @@ def get_tweets(tweets_ids):
             deleted.append(id)
 
     return tweets, deleted
+
+
+def get_tweets_empty(tweets_ids):
+    api = twitter_auth.autentica_list()
+
+    ids = []
+    for tweet in tweets_ids:
+        ids.append(str(tweet.twitter_id))
+    tweets = []
+    if len(ids) > 0:
+        for status in api.statuses_lookup(ids, trim_user=False, include_entities=True, map_=False, tweet_mode='extended'):
+            tweets.append(status)
+    deleted = []
+    for id in ids:
+        if not any(status.id_str == id for status in tweets):
+            deleted.append(id)
+
+    return tweets, deleted

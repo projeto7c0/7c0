@@ -1,5 +1,7 @@
 import twitter
 from database import recupera_ids
+from database import recupera_empty
+from database import upsert_tweets
 from database import update_tweets_db
 
 
@@ -22,6 +24,18 @@ def update_tweets(minutes):
             updated_tweets = []
             update_tweets_db(updated_tweets, deleted)
 
+
+def update_empty():
+    tweets = recupera_empty()
+    print(len(tweets))
+
+    if len(tweets) > 100:
+        id_groups = split(tweets, 1+len(tweets)//100)
+    else:
+        id_groups = [tweets]
+    for id_group in id_groups:
+        updated_tweets, deleted = twitter.get_tweets_empty(id_group)
+        upsert_tweets(updated_tweets, deleted)
 
 
 def split(a, n):
