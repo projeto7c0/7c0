@@ -3,7 +3,7 @@ from json import load
 
 
 def autentica_list():
-    with open("7c0-capturas/config.json") as jsonfile:
+    with open("config.json") as jsonfile:
         db_config = load(jsonfile)['twitter-keys']
 
     auth = tweepy.OAuthHandler(db_config['api_key'], db_config['api_secret_key'])

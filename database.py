@@ -7,7 +7,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine.url import URL
 from sqlalchemy.orm import sessionmaker
 
-with open("7c0-capturas/config.json") as jsonfile:
+with open("config.json") as jsonfile:
     db_config = load(jsonfile)['database_dml']
 
 engine = create_engine(URL(db_config['drivername'], db_config['username'],
@@ -160,6 +160,13 @@ def recupera_ids(minutes):
         return session.query(Tweet).filter(Tweet.erased == False).all()
 
 
+def recupera_empty():
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    
+    return session.query(Tweet).filter(Tweet.is_retweet == None).filter(Tweet.erased == False).limit(50000).all()
+
+
 def update_tweets_db(updated_tweets, deleted):
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -173,6 +180,38 @@ def update_tweets_db(updated_tweets, deleted):
         tweet = session.query(Tweet).filter_by(twitter_id=deleted_id).first()
         tweet.erased = True
         tweet.erased_at = datetime.utcnow()
+
+    session.commit()
+    session.close()
+
+
+def upsert_tweets(updated_tweets, deleted):
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    for updated_tweet in updated_tweets:
+        tweet = session.query(Tweet).filter_by(twitter_id=updated_tweet.id_str).first()
+
+        tweet.retweet_count = updated_tweet.retweet_count
+        tweet.favorite_count = updated_tweet.favorite_count
+        tweet.text=updated_tweet.full_text
+        tweet.twitter_user_id = updated_tweet.user.id_str
+        tweet.created_at = updated_tweet.created_at
+        tweet.favorite_count = updated_tweet.favorite_count
+        tweet.is_quote = updated_tweet.is_quote_status
+        tweet.is_retweet = hasattr(updated_tweet, 'retweeted_status')
+        tweet.quoted_status_id = updated_tweet.quoted_status_id_str if hasattr(updated_tweet, 'quoted_status_id_str') else None
+        tweet.retweet_count = updated_tweet.retweet_count
+        tweet.reply_to_screen_name = updated_tweet.in_reply_to_screen_name
+        tweet.reply_to_status_id = updated_tweet.in_reply_to_status_id_str
+        tweet.in_reply_to_status_id = updated_tweet.in_reply_to_status_id_str
+        tweet.retweeted_status_id = updated_tweet.retweeted_status.id_str if hasattr(updated_tweet, 'retweeted_status') else None
+        tweet.reply_count = updated_tweet.reply_count if hasattr(updated_tweet, 'reply_count') else None
+        tweet.five_min_check = True
+        tweet.hourly_check = True
+        tweet.daily_check = True
+        tweet.weekly_check = True
+        tweet.bot_tweeted = False
 
     session.commit()
     session.close()
