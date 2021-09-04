@@ -7,7 +7,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine.url import URL
 from sqlalchemy.orm import sessionmaker
 
-with open("7c0-capturas/config.json") as jsonfile:
+with open("7c0/config.json") as jsonfile:
     db_config = load(jsonfile)['database_dml']
 
 engine = create_engine(URL(db_config['drivername'], db_config['username'],
