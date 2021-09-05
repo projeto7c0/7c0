@@ -82,6 +82,22 @@ def get_all_users(exclude_blocked):
         return session.query(User).all()
 
 
+def get_restricted_users():
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    if (exclude_blocked):
+        return session.query(User).filter(User.protected==False).filter(User.active==True).all()
+    else:
+        return session.query(User).all()
+
+
+def get_users_that_removed():
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    return session.query(User).filter(User.protected==False).filter(User.active==True).all()
+
+
 def recupera_ids_total(list):
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -102,7 +118,6 @@ def insere_membros(members, twitter_list):
     session = Session()
 
     for member in members:
-        print(member.id_str + " - " + member.screen_name)
         user = session.query(User).filter_by(twitter_user_id=member.id_str).filter_by(list_id=twitter_list.id).first()
         if (user == None):
             new = User(list_id=twitter_list.id,
@@ -136,6 +151,9 @@ def atualiza_membros(members):
             user.screen_name = member.screen_name
             user.bio = member.description
             user.active = user.updated = True
+            user.protected = member.protected
+            user.verified = member.verified
+
 
     session.commit()
 
@@ -164,7 +182,7 @@ def recupera_empty():
     Session = sessionmaker(bind=engine)
     session = Session()
     
-    return session.query(Tweet).filter(Tweet.is_retweet == None).filter(Tweet.erased == False).limit(50000).all()
+    return session.query(Tweet).filter(Tweet.is_retweet == None).all()
 
 
 def update_tweets_db(updated_tweets, deleted):
