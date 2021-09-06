@@ -1,6 +1,11 @@
 import tweepy
 import twitter_auth
+from datetime import datetime
+from json import load
 
+
+with open("tweets.json", encoding='utf-8') as jsonfile:
+        tweet_texts = load(jsonfile)
 
 def list_tweets(last_id, twitter_list):
     api = twitter_auth.autentica_list()
@@ -62,3 +67,35 @@ def get_tweets_empty(tweets_ids):
             deleted.append(id)
 
     return tweets, deleted
+
+
+def tweet_start():
+    print(tweet_texts["inicio_publicacao"].format(horas=datetime.now().isoformat(timespec='minutes')))
+
+def tweet_restricted_start(qt_restricted):
+    print(tweet_texts["inicio_contas_restritas"].format(qtde_contas=qt_restricted))
+
+def tweet_restricted(user, previous_status):
+    if (user.withheld_scope):
+        print(tweet_texts["conta_restrita"].format(nome_user= user.screen_name, tipo_restricao="conteúdo retido"))
+    elif (user.protected):
+        print(tweet_texts["conta_restrita"].format(nome_user= user.screen_name, tipo_restricao="tweets protegidos"))
+    else:
+        print(tweet_texts["conta_restrita"].format(nome_user= user.screen_name, tipo_restricao=""))
+    
+
+def tweet_start_user(user):
+    print(tweet_texts["inicio_arroba"].format(nome=user.name))
+
+def tweet_end_user(user, qt_tweets, previous_status):
+    print(tweet_texts["fim_arroba"].format(nome=user.name, qtde_tuites=qt_tweets))
+
+def tweet_erased(tweet, previous_status):
+    print(tweet_texts["apagado_inicio"].format(id=tweet.twitter_id, created_at=tweet.created_at, interval=tweet.erased_at - tweet.created_at))
+    print(tweet_texts["apagado_texto"].format(tweet=tweet.text[0:200]))
+
+def tweet_end(qtde_tweets):
+    print(tweet_texts["fim_publicacao"].format(qtde_tweets=qtde_tweets))
+    print(tweet_texts["fim_site"])
+    print(tweet_texts["fim_newsletter"])
+    print(tweet_texts["fim_apoios"])
