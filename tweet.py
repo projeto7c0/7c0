@@ -10,10 +10,9 @@ if __name__ == '__main__':
     if (len(restricted_users) > 0):
         previous_status = twitter.tweet_restricted_start(len(restricted_users))
         for user in restricted_users:
-            twitter.tweet_restricted(user, previous_status)
+            previous_status = twitter.tweet_restricted(user, previous_status)
     
     user_ids = database.get_users_that_removed()
-
     tweet_total = tweet_count = 0
 
     for user_id in user_ids:

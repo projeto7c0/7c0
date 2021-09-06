@@ -70,32 +70,60 @@ def get_tweets_empty(tweets_ids):
 
 
 def tweet_start():
-    print(tweet_texts["inicio_publicacao"].format(horas=datetime.now().isoformat(timespec='minutes')))
+    api = twitter_auth.autentica_tweets()
+    message = tweet_texts["inicio_publicacao"].format(horas=datetime.now().isoformat(timespec='minutes'))
+
+    api.update_status(status=message)
+    
 
 def tweet_restricted_start(qt_restricted):
-    print(tweet_texts["inicio_contas_restritas"].format(qtde_contas=qt_restricted))
+    api = twitter_auth.autentica_tweets()
+
+    message = tweet_texts["inicio_contas_restritas"].format(qtde_contas=qt_restricted)
+    return api.update_status(status=message)
 
 def tweet_restricted(user, previous_status):
     if (user.withheld_scope):
-        print(tweet_texts["conta_restrita"].format(nome_user= user.screen_name, tipo_restricao="conteúdo retido"))
+        message = tweet_texts["conta_restrita"].format(nome_user= user.screen_name, tipo_restricao="conteúdo retido")
     elif (user.protected):
-        print(tweet_texts["conta_restrita"].format(nome_user= user.screen_name, tipo_restricao="tweets protegidos"))
+        message = tweet_texts["conta_restrita"].format(nome_user= user.screen_name, tipo_restricao="tweets protegidos")
     else:
-        print(tweet_texts["conta_restrita"].format(nome_user= user.screen_name, tipo_restricao=""))
+        message = tweet_texts["conta_restrita"].format(nome_user= user.screen_name, tipo_restricao="")
+
+    api = twitter_auth.autentica_tweets()
+    return api.update_status(status=message, in_reply_to_status_id = previous_status.id)
     
 
 def tweet_start_user(user):
-    print(tweet_texts["inicio_arroba"].format(nome=user.name))
+    api = twitter_auth.autentica_tweets()
+
+    message = tweet_texts["inicio_arroba"].format(nome=user.name)
+    return api.update_status(status=message)
 
 def tweet_end_user(user, qt_tweets, previous_status):
-    print(tweet_texts["fim_arroba"].format(nome=user.name, qtde_tuites=qt_tweets))
+    api = twitter_auth.autentica_tweets()
+    message = tweet_texts["fim_arroba"].format(nome=user.name, qtde_tuites=qt_tweets)
+    return api.update_status(status=message, in_reply_to_status_id = previous_status.id)
 
 def tweet_erased(tweet, previous_status):
-    print(tweet_texts["apagado_inicio"].format(id=tweet.twitter_id, created_at=tweet.created_at, interval=tweet.erased_at - tweet.created_at))
-    print(tweet_texts["apagado_texto"].format(tweet=tweet.text[0:200]))
+    api = twitter_auth.autentica_tweets()
+    message = tweet_texts["apagado_inicio"].format(id=tweet.twitter_id, created_at=tweet.created_at, interval=tweet.erased_at - tweet.created_at)
+    previous_status = api.update_status(status=message, in_reply_to_status_id = previous_status.id)
+    
+    message = tweet_texts["apagado_texto"].format(tweet=tweet.text[0:200])
+    return api.update_status(status=message, in_reply_to_status_id = previous_status.id)
 
 def tweet_end(qtde_tweets):
-    print(tweet_texts["fim_publicacao"].format(qtde_tweets=qtde_tweets))
-    print(tweet_texts["fim_site"])
-    print(tweet_texts["fim_newsletter"])
-    print(tweet_texts["fim_apoios"])
+    api = twitter_auth.autentica_tweets()
+
+    message = tweet_texts["fim_publicacao"].format(qtde_tweets=qtde_tweets)
+    previous_status = api.update_status(status=message)
+
+    message = tweet_texts["fim_site"]
+    previous_status = api.update_status(status=message, in_reply_to_status_id = previous_status.id)
+    
+    message = tweet_texts["fim_newsletter"]
+    previous_status = api.update_status(status=message, in_reply_to_status_id = previous_status.id)
+    
+    message = tweet_texts["fim_apoios"]
+    previous_status = api.update_status(status=message, in_reply_to_status_id = previous_status.id)
