@@ -13,6 +13,6 @@
 	"fim_arroba": "Fim da listagem de tweets recuperados para {nome}. Foram encontrados {qtde_tuites} tweets.",
 	
 	"apagado_inicio": "O tweet com id {id} criado em {created_at} foi apagado após {interval}. Ele falava sobre:",
-	"apagado_texto": "{tweet} ..."
+	"apagado_texto": "{tweet}  ..."
 
 }
