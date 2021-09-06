@@ -113,7 +113,7 @@ def tweet_erased(tweet, previous_status):
     message = tweet_texts["apagado_inicio"].format(id=tweet.twitter_id, created_at=tweet.created_at, interval=tweet.erased_at - tweet.created_at)
     previous_status = api.update_status(status=message, in_reply_to_status_id = previous_status.id)
     
-    message = tweet_texts["apagado_texto"].replace("https://t.co", "tco").format(tweet=tweet.text[0:200])
+    message = tweet_texts["apagado_texto"].format(tweet=tweet.text.replace("https://t.co", "tco")[0:200])
     return api.update_status(status=message, in_reply_to_status_id = previous_status.id)
 
 def tweet_end(qtde_tweets):
