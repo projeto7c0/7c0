@@ -25,7 +25,7 @@ if __name__ == '__main__':
             tweet_count += 1
         twitter.tweet_end_user(user, len(tweets), previous_status)
 
-        if tweet_count >= 20:
+        if tweet_count >= 25:
             tweet_count = 0
             time.sleep(3600)
 

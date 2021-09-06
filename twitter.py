@@ -72,8 +72,11 @@ def get_tweets_empty(tweets_ids):
 def tweet_start():
     api = twitter_auth.autentica_tweets()
     message = tweet_texts["inicio_publicacao"].format(horas=datetime.now().isoformat(timespec='minutes'))
+    previous_status = api.update_status(status=message)
 
-    api.update_status(status=message)
+    message = tweet_texts["inicio_link"]
+    previous_status = api.update_status(status=message, in_reply_to_status_id = previous_status.id)
+
     
 
 def tweet_restricted_start(qt_restricted):
