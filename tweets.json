@@ -1,6 +1,6 @@
 {
 	"inicio_publicacao": "Começando o relatório às {horas} tweets serão espaçados de tempos em tempos, para evitar que o bot seja bloqueado pelo twitter.",
-	"inicio_link": "Todos os tweets que serão recuperados podem ser encontrados nesse link: //colocar o link aqui. =)",
+	"inicio_link": "Todos os tweets que serão recuperados podem ser encontrados nesse link: http://data.7c0.link/public/dashboard/be1a793f-6fb5-45db-8d19-e193d60182f8",
 	
 	"fim_publicacao": "Fim da triagem diária, foram encontrados {qtde_tweets} tweets que sumiram compartilhe o perfil @projeto7c0 para que mais pessoas saibam o que desaparece da timeline dos políticos.",
 	"fim_site": "Quer saber mais sobre o projeto? Acesse https://projeto7c0.com.br/ e veja saiba tudo sobre o projeto",
@@ -14,6 +14,6 @@
 	"fim_arroba": "Fim da listagem de tweets recuperados para {nome}. Foram encontrados {qtde_tuites} tweets.",
 	
 	"apagado_inicio": "O tweet com id {id} criado em {created_at} foi apagado após {interval}. Ele falava sobre:",
-	"apagado_texto": "{tweet}  ..."
+	"apagado_texto": "{tweet}..."
 
 }
