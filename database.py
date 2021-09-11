@@ -270,7 +270,7 @@ def update_tweet(tweet):
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    tweet = session.query(Tweet).filter_by(twitter_id=tweet.id_str).first()
+    tweet = session.query(Tweet).filter_by(twitter_id=tweet.id).first()
 
     tweet.bot_tweeted = True
     tweet.bot_tweeted_at = datetime.utcnow();
