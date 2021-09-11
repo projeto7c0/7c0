@@ -21,6 +21,7 @@ if __name__ == '__main__':
         tweets = database.get_tweets(user_id)
         for tweet in tweets:
             previous_status = twitter.tweet_erased(tweet, previous_status)
+            database.update_tweet(tweet)
             tweet_total += 1
             tweet_count += 1
         twitter.tweet_end_user(user, len(tweets), previous_status)
