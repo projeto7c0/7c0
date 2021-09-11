@@ -262,5 +262,11 @@ def get_tweets(user_id):
     session = Session()
     
     result = session.query(Tweet).filter(Tweet.erased==True).filter(Tweet.bot_tweeted==False).filter(Tweet.user_id==user_id[0]).all()
+
+    for tweet in result:
+        tweet.bot_tweeted = True
+        tweet.bot_tweeted_at = datetime.utcnow()
+
+    session.commit()
     session.close()
     return result
