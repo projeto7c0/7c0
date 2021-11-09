@@ -5,7 +5,7 @@
 	"fim_publicacao": "Fim da triagem diária, foram encontrados {qtde_tweets} tweets que sumiram compartilhe o perfil @projeto7c0 para que mais pessoas saibam o que desaparece da timeline dos políticos.",
 	"fim_site": "Quer saber mais sobre o projeto? Acesse https://projeto7c0.com.br/ e veja saiba tudo sobre o projeto",
 	"fim_apoios": "Quer ajudar a financiar o projeto? Acesse o nosso apoia-se em https://apoia.se/projeto-7c0 ou mande um pix para pix@projeto7c0.com.br",
-	"fim_newsletter": "Quer ficar atualizado? Assine a nossa newsletter, que teremos informações quinzenais para você! Para assinar só clicar aqui https://projeto7c0.us20.list-manage.com//subscribe/post?u=984470f280d60b82c247e3d7b&id=00a31b0d4a",
+	"fim_newsletter": "Assine a nossa newsletter automatizada em parceria com o @nucleojor. Toda segunda na sua caixa de entrada! Para assinar só clicar aqui https://www.nucleo.jor.br/newsletters/7c0/",
 
 	"inicio_contas_restritas": "O projeto encontrou {qtde_contas} contas com alguma restrição que impede o bot de checar suas mensagens.",
 	"conta_restrita": "A conta do usuário {nome_user} está com restrição do tipo: {tipo_restricao}.",
