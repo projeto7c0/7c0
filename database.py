@@ -183,9 +183,9 @@ def recupera_ids(minutes):
     session = Session()
 
     if minutes > 0:
-        return session.query(Tweet).filter(Tweet.erased == False).filter(Tweet.created_at >= datetime.utcnow()-timedelta(minutes=minutes)).all()
+        return session.query(Tweet.twitter_id).filter(Tweet.erased == False).filter(Tweet.created_at >= datetime.utcnow()-timedelta(minutes=minutes)).all()
     else:
-        return session.query(Tweet).filter(Tweet.erased == False).all()
+        return session.query(Tweet.twitter_id).filter(Tweet.erased == False).all()
 
 
 def recupera_empty():
