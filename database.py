@@ -261,7 +261,7 @@ def get_tweets(user_id):
     Session = sessionmaker(bind=engine)
     session = Session()
     
-    result = session.query(Tweet).filter(Tweet.erased==True).filter(Tweet.bot_tweeted==False).filter(Tweet.user_id==user_id[0]).all()
+    result = session.query(Tweet).filter(Tweet.erased==True).filter(Tweet.bot_tweeted==False).filter(Tweet.is_retweet==False).filter(Tweet.user_id==user_id[0]).all()
 
     session.close()
     return result
