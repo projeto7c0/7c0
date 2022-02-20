@@ -102,7 +102,7 @@ def get_users_that_removed():
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    return session.query(Tweet.user_id).filter(Tweet.erased==True).filter(Tweet.bot_tweeted==False).distinct(Tweet.user_id).all()
+    return session.query(Tweet.user_id).filter(Tweet.erased==True).filter(Tweet.bot_tweeted==False).filter(Tweet.is_retweet==False).distinct(Tweet.user_id).all()
 
 
 def recupera_ids_total(list):
