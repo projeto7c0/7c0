@@ -41,7 +41,7 @@ def get_tweets(tweets_ids):
         ids.append(str(tweet.twitter_id))
     tweets = []
     if len(ids) > 0:
-        for status in api.statuses_lookup(ids, trim_user=True, include_entities=False, map_=False):
+        for status in api.lookup_statuses(ids, trim_user=True, include_entities=False, map_=False):
             tweets.append(status)
     deleted = []
     for id in ids:
@@ -59,7 +59,7 @@ def get_tweets_empty(tweets_ids):
         ids.append(str(tweet.twitter_id))
     tweets = []
     if len(ids) > 0:
-        for status in api.statuses_lookup(ids, trim_user=False, include_entities=True, map_=False, tweet_mode='extended'):
+        for status in api.lookup_statuses(ids, trim_user=False, include_entities=True, map_=False, tweet_mode='extended'):
             tweets.append(status)
     deleted = []
     for id in ids:
