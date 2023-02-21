@@ -19,7 +19,7 @@ engine = create_engine(URL(db_config['drivername'], db_config['username'],
 def insere_lista(tweets, twitter_list):
     Session = sessionmaker(bind=engine)
     session = Session()
-
+    
     for tweet in tweets:
         old_tweet = session.query(Tweet).filter_by(
             twitter_id=tweet.id_str).filter_by(list_id=twitter_list.id).first()
@@ -80,7 +80,7 @@ def get_all_lists():
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    return session.query(List).all()
+    return session.query(List).filter(List.ativo == True).all()
 
 
 def get_all_users(exclude_blocked):
@@ -108,6 +108,9 @@ def get_users_that_removed():
 def recupera_ids_total(list):
     Session = sessionmaker(bind=engine)
     session = Session()
+
+    top_id = session.query(Tweet).filter_by(list_id=list.id).order_by(Tweet.twitter_id.desc()).first()
+    top_id = top_id if top_id else 0
 
     return session.query(Tweet).filter_by(list_id=list.id).order_by(Tweet.twitter_id.desc()).first()
 

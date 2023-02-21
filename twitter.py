@@ -4,7 +4,7 @@ from datetime import datetime
 from json import load
 
 
-with open("tweets.json", encoding='utf-8') as jsonfile:
+with open("7c0/tweets.json", encoding='utf-8') as jsonfile:
         tweet_texts = load(jsonfile)
 
 def list_tweets(last_id, twitter_list):
@@ -28,7 +28,7 @@ def list_members(twitter_list):
 
     members = []
 
-    for member in tweepy.Cursor(api.list_members, owner_id=twitter_list.owner_id, list_id=twitter_list.list_id, count=200).items():
+    for member in tweepy.Cursor(api.get_list_members, owner_id=twitter_list.owner_id, list_id=twitter_list.list_id, count=200).items():
         members.append(member)
 
     return members  

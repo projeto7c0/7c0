@@ -12,6 +12,8 @@ class List(Base):
     name = Column(Text)
     owner_id = Column(Text)
     address = Column(Text)
+    ativo = Column(Boolean)
+    publicar = Column(Boolean)
 
     def __repr__(self):
         return f'List {self.name}'
@@ -47,6 +49,9 @@ class Tweet(Base):
     erased_at = Column(DateTime)
     bot_tweeted = Column(Boolean)
     bot_tweeted_at = Column(DateTime)
+    redacted = Column(Boolean)
+    redacted_at = Column(DateTime)
+
 
     UniqueConstraint('twitter_id', 'list_id', name='unique_tweet')
 
